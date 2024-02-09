@@ -2,7 +2,8 @@
 
 ## Introduction
 
-This is a simple project using the Step-MXO2-LPC FPGA board to control LEDs.  
+This is a simple project for [`2024 Winter Break Event`](https://www.eetree.cn/activity/15) by `EETree` which 
+controls LEDs using the Step-MXO2-LPC FPGA board.  
 Below is the peripheral configuration of the Step-MXO2-LPC FPGA board.
 
 * 8 LEDs
@@ -39,4 +40,4 @@ The LED will be lit up in 4 different patterns:
 ## Simulation
 
 There are a few simple test benches for each module in the [tb](simulating/tb) directory. You can simulate the modules
-with iverilog and gtkwave.
+with [Icarus Verilog](https://github.com/steveicarus/iverilog) and [GTKWave](https://github.com/gtkwave/gtkwave).  
