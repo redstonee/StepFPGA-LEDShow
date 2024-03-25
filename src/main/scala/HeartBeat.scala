@@ -10,6 +10,7 @@ import chisel3._
  */
 class HeartBeat extends Blinker {
   private val ledReg = RegInit(0.U(1.W)) // 1 bit register for led
+  private val firstCycleFinished = RegInit(false.B) // Whether the first cycle is finished
 
   when(clockCnt < realPeriod * 2.U - 1.U) {
     clockCnt := clockCnt + 1.U
@@ -18,7 +19,9 @@ class HeartBeat extends Blinker {
     }
   }.otherwise {
     clockCnt := 0.U
-    currentLed := currentLed + 1.U
+
+    currentLed := Mux(firstCycleFinished, currentLed + 1.U, currentLed) // Change the current led every 2 cycles
+    firstCycleFinished := ~firstCycleFinished // Toggle the flag
     ledReg := !ledReg
   }
 

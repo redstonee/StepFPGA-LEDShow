@@ -14,6 +14,7 @@ class Breath extends Blinker {
 
   private val pwmDuty = RegInit(1.U(7.W))
   private val increaseDuty = RegInit(true.B) // A flag for duty cycle change direction
+  private val firstCycleFinished = RegInit(false.B) // Whether the first cycle is finished
 
   when(clockCnt < realPeriod * 500.U - 1.U) { // For duty cycle change, change the duty every 1/200 of the period
     clockCnt := clockCnt + 1.U
@@ -25,7 +26,8 @@ class Breath extends Blinker {
     }.elsewhen(pwmDuty === 1.U) {
       increaseDuty := true.B
     }.elsewhen(pwmDuty === 0.U) {
-      currentLed := currentLed + 1.U
+      currentLed := Mux(firstCycleFinished, currentLed + 1.U, currentLed) // Change the current led every 2 cycles
+      firstCycleFinished := ~firstCycleFinished // Toggle the flag
     }
   }
 
